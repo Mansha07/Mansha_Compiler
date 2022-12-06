@@ -23,7 +23,7 @@ def oneLineLexer(string):
             if lit[0] == "=":
                 output_window.insert(END, "{identifier,%s}\n" % lit[1:])
             else:
-                output_window.insert(END, "{lit,%s}\n" % lit)
+                output_window.insert(END, "{literal,%s}\n" % lit)
 
     # if the string contains separators: (),:, "", then print(separators)
     if(re.findall(r'(:|\(|\)|\"|\")', string)):
@@ -84,7 +84,7 @@ nextButton.grid(row = 2, pady=5, column = 1, sticky = W)
 
 
 # Current Line Label:
-lineLabel = Label(root, text = "Current Proccessing Line:", font=("Arial", 15), fg = "black")
+lineLabel = Label(root, text = "Current Line Tokenized:", font=("Arial", 15), fg = "black")
 lineLabel.grid(row = 3, column = 0, pady=10, sticky = W)
 
 # Counter Label:

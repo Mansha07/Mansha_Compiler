@@ -18,7 +18,7 @@ class MainWIndow(Frame):
         self.initInfoLabel()
         
     def initUI(self):        
-        self.parent.title('SynCom')
+        self.parent.title('SynCom: Syntax Analyzer')
         self.pack(fill=BOTH, expand=1)
         sw = self.parent.winfo_screenwidth()
         sh = self.parent.winfo_screenheight()
@@ -89,7 +89,7 @@ followset={}
 parsingtable={}
 
 class FirstFollow:
-    def __init__(self,gram,ter,nonter,start):#need to pass the grammar here..
+    def __init__(self,gram,ter,nonter,start):
         self.gram=gram
         self.term=ter
         self.nonterm=nonter
@@ -103,32 +103,17 @@ class FirstFollow:
             fir.extend(ip)
         else:
             for i in self.gram[ip]:
-                # print('1')
-                #print(i[0],":",i,"::")
                 if(i[0] in self.term):
-                    #print('2')
-                    #print(i[0])
-                    #print(ctr)
                     fir.extend(i[0])
                 else:
-                    #print('3')
                     length=len(i)
                     while(ctr<length):
-                        #print('4')
-                        if('n' in self.gram[i[ctr]]):   # 'n' is for null symbol
-                                #print('5')
-                                #print(ctr)
+                        if('n' in self.gram[i[ctr]]): 
                                 fir.extend(self.first(i[ctr]))
-                                #print(fir)
                                 ctr+=1
-                                #print(ctr)
                         else:
-                                #print('6')
-                                
-                                fir.extend(self.first(i[ctr]))
-                                #print(fir)
-                                #print(ctr)
-                                break
+                            fir.extend(self.first(i[ctr]))
+                            break
         firstset[ip]=fir
         return fir
 
@@ -136,56 +121,36 @@ class FirstFollow:
         foll=[]
         if(ip==self.start):
             foll.extend('$')
-        for key in self.gram.keys():#iterating thorugh the keys of the grammar
+        for key in self.gram.keys():
             vals=self.gram[key]
-            #print('1')
-            #print('key',key)
-            #print('vals',vals)
             for each in vals:
-                #print('2')
-                #print('each',each)
                 ctr=0
                 length=len(each)
-                #print('len',length)
                 for j in each:
-                    #print('3')
-                    #print('j',j)
                     if(j==ip):
-                        #print('4')
                         if(ctr<length-1):
-                            #print('5')
                             if((ip != key)and('n'in self.first(each[ctr+1]))):
-                                #print('6')
                                 for x in self.first(each[ctr+1]):
                                     if((x not in foll)and(x!='n')):
                                         foll.extend(x)
                                 for x in self.follow(key):
                                     if((x not in foll)and(x!='n')):
                                         foll.extend(x)
-                                #print('foll',foll)
                             else:
-                                #print('7')
                                 for x in self.first(each[ctr+1]):
                                     if((x not in foll)and(x!='n')):
                                         foll.extend(x)
-                                #print('foll',foll)
                         if((ip != key)and(ctr==length-1)):
-                            #print('8')
                             for x in self.follow(key):
                                 if((x not in foll)and(x!='n')):
                                     foll.extend(x)
-                            #print('foll',foll)
                     ctr+=1
                 ctr=0
         followset[ip]=foll
         return foll
       
     def parsingtable(self,ip):
-        #print(self.gram)
-        
         for i in self.gram[ip]:
-            #print("+++",i)
-            #print(i[0],":",i,"::",ip)   
             if ip not in parsingtable: 
                 parsingtable[ip]={}
                 
@@ -241,9 +206,7 @@ def createparser(text):
     start=text[3]
     print(terminals,nonterminals,start)
     a=FirstFollow(dict,terminals,nonterminals,start)
-    #a.findset()
     nont=nonterminals
-    # print('FOLLOW :',"e " ,a.first('E'))
     for i in nont:
         fi=a.first(i)
         fo=a.follow(i)
@@ -258,8 +221,6 @@ def createparser(text):
     
     a.printparser()
     return parsingtable
-
-
 try:
     main()
 
