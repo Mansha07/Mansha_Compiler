@@ -9,3 +9,7 @@
 <h4> Syntax Analyzer which will generate a parse tree according to the grammar entered by the user<h4>
 
 <h2> The main motive of this project is to implement execution of two important phase of Compiler Construction</h2>
+
+ <a target="_blank">
+  <img align="centre" height="250" width="300" alt="GIF" src="https://github.com/Mansha07/Mansha_Compiler/blob/main/Code.jpg">
+</a>
